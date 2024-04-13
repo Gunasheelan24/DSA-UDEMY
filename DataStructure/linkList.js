@@ -97,11 +97,32 @@ class linkList {
       return false;
     }
   }
+  insert(index, value) {
+    if (index === 0) return this.unShift(value);
+    if (index === this.length) return this.push(value);
+    if (index <= -1 || index > this.length) return undefined;
+    const creteNode = new Node(value);
+    const getIndex = this.get(index - 1);
+    creteNode.next = getIndex.next;
+    getIndex.next = creteNode;
+    this.length++;
+  }
+  remove(index) {
+    if (index === 0) this.shift();
+    if (index === this.length) this.pop();
+    if (index <= -1 || index > this.length) return undefined;
+    const before = this.get(index - 1); // 1-2-3-4-5 // 3 get 2 value
+    const temp = before.next;
+    before.next = temp.next;
+    temp.next = null;
+    this.length--;
+  }
 }
 
 // Creating New Node
-const firstNode = new linkList(0);
-firstNode.push(1);
-firstNode.unShift(-1);
-const getValue = firstNode.set(1);
+const firstNode = new linkList(1);
+firstNode.push(2);
+firstNode.unShift(0);
+firstNode.insert(1, 100);
+firstNode.remove();
 console.log(firstNode);
